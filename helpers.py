@@ -66,10 +66,8 @@ def add_portfolio():
     """
     This function could take a stock symbol and quantity as input and add the stock to the user's portfolio
     """
-    if stock_symbol in portfolio:
-        portfolio[stock_symbol] += quantity
-    else:
-        portfolio[stock_symbol] = quantity
+    pass 
+
 
 def portfolio_growth():
     """
