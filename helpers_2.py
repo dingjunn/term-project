@@ -88,9 +88,9 @@ def data_display(ticker):
     return data_dict
 
 # Example usage of data_display function
-data = data_display('AAPL')
-print(data)
-data_display("AAPL")
+# data = data_display('AAPL')
+# print(data)
+# data_display("AAPL")
 
 def portfolio_growth(portfolio):
     """

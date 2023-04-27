@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 
-from helpers import data_display, portfolio_diversification, portfolio_growth, portfolio_risk
+from helpers_2 import data_display, portfolio_diversification, portfolio_growth, portfolio_risk
 
 app = Flask(__name__)
 

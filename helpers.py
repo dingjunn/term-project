@@ -221,3 +221,8 @@ def data_store(portfolio_name, portfolio_return, portfolio_risk, portfolio_diver
     conn.commit()
     conn.close()
 
+def main():
+    data = data_display("AAPL")
+    print(data)
+if __name__ == "__main__":
+    main()
