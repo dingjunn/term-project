@@ -122,51 +122,34 @@ def portfolio_growth(portfolio):
 
 def portfolio_diversification(portfolio):
     """
-    This function will evaluate the diversification of a portfolio across different sectors, industries, and asset classes.
+    Display the industry information of the stocks in the portfolio to show diversification.
     
     Parameters:
         portfolio (dict): A dictionary containing stocks in the portfolio and their quantities.
             Example: {'AAPL': 10, 'GOOG': 5, 'MSFT': 20}
-    
-    Returns:
-        dict: A dictionary containing the diversification of the portfolio across sectors, industries, and asset classes
     """
-    # Get information for each stock in the portfolio
-    stock_infos = []
-    for stock in portfolio.keys():
+    industries = {}
+    
+    for stock, quantity in portfolio.items():
         stock_info = get_stock_info(stock)
-        stock_infos.append(stock_info)
-    # Extract sector, industry, and asset class information for each stock
-    sectors = set([info['info']['sector'] for info in stock_infos])
-    industries = set([info['info']['industry'] for info in stock_infos])
-    asset_classes = set([info['info']['quoteType'] for info in stock_infos])
-    # Calculate the proportion of the portfolio in each sector, industry, and asset class
-    total_value = sum([info['hist']['Close'].iloc[-1] * quantity for stock, quantity in portfolio.items()])
-    sector_values = {}
-    industry_values = {}
-    asset_class_values = {}
-    for info, quantity in zip(stock_infos, portfolio.values()):
-        value = info['hist']['Close'].iloc[-1] * quantity
-        sector = info['info']['sector']
-        industry = info['info']['industry']
-        asset_class = info['info']['quoteType']
-        if sector in sector_values:
-            sector_values[sector] += value
-        else:
-            sector_values[sector] = value
-        if industry in industry_values:
-            industry_values[industry] += value
-        else:
-            industry_values[industry] = value
-        if asset_class in asset_class_values:
-            asset_class_values[asset_class] += value
-        else:
-            asset_class_values[asset_class] = value
-    sector_proportions = {sector: value / total_value for sector, value in sector_values.items()}
-    industry_proportions = {industry: value / total_value for industry, value in industry_values.items()}
-    asset_class_proportions = {asset_class: value / total_value for asset_class, value in asset_class_values.items()}
-    # Create dictionary with diversification information
-    diversification_dict = {}
+        industry = stock_info['info'].get('industry')
+        if industry:
+            if industry in industries:
+                industries[industry] += quantity
+            else:
+                industries[industry] = quantity
+    
+    if not industries:
+        print("No industry information available for the stocks in the portfolio.")
+        return
+    
+    total_quantity = sum(industries.values())
+    
+    print("Portfolio Diversification by Industry:")
+    for industry, quantity in industries.items():
+        percentage = (quantity / total_quantity) * 100
+        print(f"- {industry}: {quantity} shares ({percentage:.2f}%)")
+
        
 
 def portfolio_risk(portfolio):
